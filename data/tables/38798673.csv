@@ -1,0 +1,11 @@
+Gene Set,Enrichment Score (NES),p-value,Cell Line
+Breast CSLC Signature,7.3,1.0e-16,BT20
+Breast CSLC Signature,6.8,1.0e-16,HCC38
+Breast CSLC Signature,6.5,1.0e-16,HCC1143
+Breast CSLC Signature,5.9,1.0e-16,HCC2157
+Breast CSLC Signature,5.7,1.0e-16,MCF7
+Breast CSLC Signature,5.5,1.0e-16,VP229
+Breast CSLC Signature,5.3,1.0e-16,VP229
+Breast CSLC Signature,5.1,1.0e-16,VP229
+Breast CSLC Signature,4.9,1.0e-16,VP229
+Breast CSLC Signature,4.7,1.0e-16,VP229

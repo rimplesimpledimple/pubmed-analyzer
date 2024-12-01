@@ -4,14 +4,14 @@ from ...storage.storage import Storage
 from ...models.paper import PaperContent
 
 class ContentExtractor:
-    """Extracts raw content from academic papers using pattern matching."""
+    """Extracts raw content from pdf files."""
     
     def __init__(self, storage: Storage):
         self.storage = storage
         
     def extract_content(self, paper_id: str, format: str = "markdown") -> PaperContent:
         """
-        Extract all content from a paper.
+        Extract all content from a pdf file.
         
         Args:
             paper_id: ID of the paper to extract

@@ -2,20 +2,19 @@ import base64
 from ..models.paper import PaperAnalysis, TableInfo
 from .prompts import PDF_SUMMARY_PROMPT, PDF_MAIN_TABLE_PROMPT
 from .base_analyzer import ContentAnalyzer
-from ..llm.claude_llm import ClaudeLLM, ClaudeLLMConfig
+from ..llm.base_llm import BaseLLM
 from ..storage.storage import Storage
 import os
 
 class PdfDumpAnalyzer(ContentAnalyzer):
     """Analyzes paper by sending the entire content to Claude LLM."""
     
-    def __init__(self, storage: Storage, api_key: str = os.getenv("CLAUDE_API_KEY")):
-        config = ClaudeLLMConfig(api_key=api_key)
-        self.llm = ClaudeLLM(config)
+    def __init__(self, storage: Storage, llm: BaseLLM):
+        self.llm = llm
         self.storage = storage
     
     def analyze_paper(self, paper_id: str) -> PaperAnalysis:
-        """Analyze paper content by sending PDF to Claude."""
+        """Analyze paper content by sending PDF to LLM."""
         pdf_data = self._get_pdf_data(paper_id)
         
         # Get analysis using PDF support
@@ -33,8 +32,11 @@ class PdfDumpAnalyzer(ContentAnalyzer):
             }
         )
         print(f"Table selection: {table_selection} \n\n")
+        metadata = self.storage.get_metadata(paper_id)
                         
         return PaperAnalysis(
+            paper_id=paper_id,
+            metadata=metadata,
             summary=summary["summary"],
             main_table=TableInfo(
                 description=table_selection["table_description"],

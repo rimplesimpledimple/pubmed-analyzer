@@ -1,0 +1,13 @@
+This study investigated how transferrin receptor 1 (TFRC) contributes to blood clot formation (thrombogenesis) through a cell death process called ferroptosis. The researchers aimed to explore TFRC's role in thrombosis and its potential therapeutic implications.
+
+Methods included establishing a deep vein thrombosis (DVT) model in rat femoral veins and using various techniques like weighted correlation network analysis, protein knockdown experiments, and molecular interaction studies. The researchers examined both animal models and human umbilical vein endothelial cells (HUVECs).
+
+Key findings revealed that:
+- TFRC was highly expressed in injured vascular tissues and identified as a hub protein in thrombosis
+- Knocking down TFRC reduced iron overload and oxidative stress, preventing ferroptosis in injured blood vessels
+- TFRC knockdown decreased blood clot formation and size while reducing hypercoagulability
+- The study discovered an interaction between TFRC and thrombospondin-1 (THBS1), with TFRC knockdown affecting THBS1 protein levels
+- During ferroptosis, the interaction between TFRC and THBS1 weakened, affecting blood clotting processes
+- The binding domain between TFRC and THBS1 was mapped to specific regions, identifying potential therapeutic targets
+
+The research concludes that TFRC contributes to thrombosis through both iron accumulation-induced ferroptosis and interaction with THBS1. This suggests that targeting TFRC could be an effective approach for preventing and treating blood clots, particularly in cases of vascular injury.

@@ -1,0 +1,4 @@
+{
+  "description": "Main Results Table: Enrichment of Gene Sets in Breast Cancer Cell Lines",
+  "footnotes": "This table shows the enrichment of the breast cancer stem-like cell (CSLC) signature in various breast cancer cell lines. The enrichment score (NES) and p-value indicate the similarity of the cell line's protein activity profile to the CSLC signature. A higher NES indicates a closer resemblance to the CSLC phenotype."
+}

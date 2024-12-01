@@ -2,6 +2,11 @@
 # Pubmed Paper Analyzer
 A tool to get pubmed papers and summarize them - get summary, tables, etc.
 
+# Limitations
+- Only supports papers with pmcid(pubmed central id). 199/294 papers provided. 
+- Rate limits for LLMs not handled. Issue with claude TPM-40k for large papers.
+
+
 # Approach
 
 ## Analysis
@@ -20,8 +25,9 @@ A tool to get pubmed papers and summarize them - get summary, tables, etc.
 ## Requirements for our app
 - Support upto 100 page research paper  - this should cover most of the papers 
 - How many parallel requests do we need to support?
-    - we would be bounded by the memory so the goal is to maximize the number of parallel requests for a given memory.
-    - assuming rate limits are high enough for both the LLMs and the pubmed api(3 per second without api). 
+    - We would be bounded by the memory so the goal is to maximize the number of parallel requests for a given memory.
+    - Download direct to storage, so memory is not an issue.
+    - Assuming rate limits are high enough for both the LLMs and the pubmed api(3 per second without api). 
 
 - Minimising cost:
     - keep the number of tokens to a minimum.
@@ -81,29 +87,44 @@ A tool to get pubmed papers and summarize them - get summary, tables, etc.
 - setup the environment variables, .env in root directory. Add "CLAUDE_API_KEY"
 
 # Usage
+Update the .env file with the API key for claude/openai. 
+Update the model getting used in main.py file.
+
 ## Streamlit UI
 - run frontend `python streamlit run app.py`
 - backend server `python main.py`
 
-## Parallel processing from terminal
-
 
 ## Using API
 - Endpoints, 
-    - `POST /papers` - to get the summary of the paper.
-    - `POST /tables` - to get the tables from the paper.
+    - `POST /get-analysis` - to get the summary of the paper.
+    - `GET /get-metadata` - to get the metadata of the paper.
+    - `GET /download` - to download the pdf of the paper.
 ```
 curl -X POST \
-  http://localhost:8000/papers \
+  http://localhost:8000/get-analysis \
   -H 'Content-Type: application/json' \
   -d '{
     "url": "https://pubmed.ncbi.nlm.nih.gov/39327512/"
   }'
 ```
 
+## Libraries used 
+- [!pymupdf](https://pymupdf.readthedocs.io/en/latest/) - to parse the pdf.
+- [!biopython](https://biopython.org/wiki/Download) - to download and parse pubmed papers.
+- [!requests](https://requests.readthedocs.io/en/latest/) - to make http requests.
+- [!anthropic](https://docs.anthropic.com/en/docs/build-with-claude/python) - to use claude api.
+- [!streamlit](https://docs.streamlit.io/en/stable/getting_started.html) - to build the UI.
+- [!pydantic](https://docs.pydantic.dev/latest/) - to define data models used for structured outputs.
+- [!fastapi](https://fastapi.tiangolo.com/) - to build the api.
 
 
-
+# Example Results
+[!https://pubmed.ncbi.nlm.nih.gov/39040441](./sample_results/39040441.png)
+[!https://pubmed.ncbi.nlm.nih.gov/38241836](./sample_results/38241836.png)
+[!https://pubmed.ncbi.nlm.nih.gov/38285791](./sample_results/38285791.png)
+[!https://pubmed.ncbi.nlm.nih.gov/38349008](./sample_results/38349008.png)
+[!https://pubmed.ncbi.nlm.nih.gov/38805560](./sample_results/38805560.png)
 
 
 

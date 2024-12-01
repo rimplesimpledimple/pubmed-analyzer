@@ -15,7 +15,8 @@ from src.core.analyzer.text_dump_analyzer import TextDumpAnalyzer
 from src.core.analyzer.extractor.content_extractor import ContentExtractor
 from src.utils.logger import setup_logging
 from src.api.paper_handler import PaperHandler
-
+from src.core.llm.openai_llm import OpenAILLM, OpenAILLMConfig
+from src.core.llm.claude_llm import ClaudeLLM, ClaudeLLMConfig
 storage_root = Path("data")
 
 def create_app() -> FastAPI:
@@ -33,16 +34,19 @@ def create_app() -> FastAPI:
     identifier = Identifier()
     download_manager = DownloadManager(downloaders=downloaders, storage=storage, identifier=identifier)    
 
+    # llm = OpenAILLM(config=OpenAILLMConfig(api_key=os.getenv("OPENAI_API_KEY")))
+    llm = ClaudeLLM(config=ClaudeLLMConfig(api_key=os.getenv("CLAUDE_API_KEY")))
+
     # Choose analyzer strategy
-    txt_dump_analyzer = TextDumpAnalyzer(storage=storage, content_extractor=ContentExtractor(storage), api_key=os.getenv("CLAUDE_API_KEY"))
-    # pdf_dump_analyzer = PdfDumpAnalyzer(storage=storage)
+    analyzer = TextDumpAnalyzer(storage=storage, content_extractor=ContentExtractor(storage), llm=llm)
+    # analyzer = PdfDumpAnalyzer(storage=storage, llm=llm)
     
     # Create paper service instance
     paper_service = PaperService(
         download_manager=download_manager,
         storage=storage,
         identifier=identifier,
-        analyzer=txt_dump_analyzer
+        analyzer=analyzer
     )
     
     # Create FastAPI app

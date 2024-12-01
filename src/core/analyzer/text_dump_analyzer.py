@@ -1,18 +1,18 @@
 from .prompts import TXT_PAPER_SUMMARY_PROMPT, TXT_PAPER_TABLE_PROMPT
 from .base_analyzer import ContentAnalyzer
-from ..llm.claude_llm import ClaudeLLM, ClaudeLLMConfig
+from ..llm.base_llm import BaseLLM
 from ..storage.storage import Storage
 from .extractor.content_extractor import ContentExtractor
 from ..models.paper import PaperContent, TableInfo, PaperAnalysis
+from pydantic import BaseModel
 import os
 from ...utils.logger import logger
 
 class TextDumpAnalyzer(ContentAnalyzer):
-    """Analyzes paper by sending the entire txt content to Claude LLM."""
+    """Analyzes paper by sending the entire txt content to LLM."""
 
-    def __init__(self, storage: Storage, content_extractor: ContentExtractor, api_key: str = os.getenv("CLAUDE_API_KEY")):
-        config = ClaudeLLMConfig(api_key=api_key)
-        self.llm = ClaudeLLM(config)
+    def __init__(self, storage: Storage, content_extractor: ContentExtractor, llm: BaseLLM):
+        self.llm = llm
         self.storage = storage
         self.content_extractor = content_extractor
     
@@ -48,10 +48,11 @@ class TextDumpAnalyzer(ContentAnalyzer):
         
         # generate summary
         prompt = TXT_PAPER_SUMMARY_PROMPT.format(title=content.title, abstract=content.abstract, content=paper_str)
-        json_structure = {
-            "summary": "Summary of the paper"
-        }
-        return self.llm.chat(prompt, json_structure=json_structure, clear_history=True)["summary"]
+
+        class SummaryResponse(BaseModel):
+            summary: str
+
+        return self.llm.chat(prompt, SummaryResponse).summary
 
     
     def _identify_main_table(self, content: PaperContent) -> TableInfo:
@@ -63,15 +64,14 @@ class TextDumpAnalyzer(ContentAnalyzer):
         
         prompt = TXT_PAPER_TABLE_PROMPT.format(title=content.title, abstract=content.abstract, content=paper_str)
         
-        json_structure = {
-            "table_description": "Description of the main results table",
-            "csv_content": "CSV formatted content of the table",
-            "footnotes": "Any footnotes associated with the table"
-        }
+        class TableResponse(BaseModel):
+            table_description: str
+            csv_content: str
+            footnotes: str
                 
-        res = self.llm.chat(prompt, json_structure=json_structure, clear_history=True)        
+        res = self.llm.chat(prompt, TableResponse)        
         return TableInfo(
-            description=res["table_description"],
-            csv_content=res["csv_content"],
-            footnotes=res["footnotes"]
+            description=res.table_description,
+            csv_content=res.csv_content,
+            footnotes=res.footnotes
         )

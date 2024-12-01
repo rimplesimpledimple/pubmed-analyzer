@@ -82,6 +82,7 @@ class PaperHandler:
         @app.get("/papers/{url:path}/download")
         async def download_paper(url: str):
             """Download paper content"""
+            
             return StreamingResponse(
                 self.paper_service.download_paper(url),
                 media_type="application/pdf",

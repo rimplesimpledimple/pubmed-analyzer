@@ -1,0 +1,10 @@
+The research paper titled "Integrated Analysis of Phagocytic and Immunomodulatory Markers in Cervical Cancer Reveals Constellations of Potential Prognostic Relevance" investigates the expression of CD68 and CD47 markers in cervical cancer (CC) and their potential prognostic implications. Despite advancements in vaccination and treatment, CC remains a significant global health issue. The study focuses on the tumor microenvironment (TME) and its role in cancer progression, particularly how tumors evade immune surveillance.
+
+This retrospective cohort study analyzed paraffin-embedded tumor tissues from 191 patients diagnosed with CC between 2014 and 2021 at the Medical University Pleven, Bulgaria. Immunohistochemical evaluation was used to assess CD68 expression in intratumoral (IT) and stromal (ST) macrophages, and CD47 expression was quantified using an H-score. Statistical analyses were conducted using R software.
+
+Key findings include:
+- High CD47 expression was more frequent in early-stage tumors and associated with higher infiltration by CD68-IT cells.
+- High infiltration by CD68-ST cells correlated with worse prognosis, whereas high CD68-IT cell infiltration was linked to a reduced risk of death from neoplastic disease.
+- CD68-IT infiltration was significantly associated with squamous cell carcinoma (SCC) histology.
+
+The study concludes that TME, particularly macrophages, plays a crucial role in CC progression. The expression of CD47 and infiltration by CD68 macrophages could serve as potential prognostic markers, aiding in the understanding of immune evasion mechanisms in CC.

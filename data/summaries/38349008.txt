@@ -1,0 +1,11 @@
+This study presents the development and characterization of CC-96673, a novel bispecific antibody targeting both CD47 and CD20 for treating non-Hodgkin's lymphoma. The key innovation lies in its optimally detuned affinity for CD47 while maintaining high affinity for CD20, designed to overcome the limitations of current CD47-targeted therapies.
+
+The researchers engineered CC-96673 using Zymeworks Azymetric technology, creating a humanized IgG1 bispecific antibody. Through in vitro studies, they demonstrated that CC-96673 selectively binds to CD20-expressing cells and effectively blocks CD47-SIRPα interaction, enhancing macrophage-mediated phagocytosis of tumor cells. The antibody showed potent anti-tumor activity through multiple mechanisms, including antibody-dependent cellular cytotoxicity (ADCC) and complement-dependent cytotoxicity (CDC).
+
+Key findings include:
+- CC-96673 demonstrated selective binding to CD20+ cells while minimizing interaction with CD47+ normal cells
+- The antibody showed enhanced phagocytosis compared to rituximab alone
+- In xenograft models, CC-96673 exhibited significant tumor growth inhibition
+- Preclinical studies in non-human primates revealed favorable pharmacokinetics and an acceptable safety profile
+
+Importantly, unlike conventional anti-CD47 antibodies, CC-96673 showed minimal binding to red blood cells and no hemagglutination, potentially reducing toxicity risks. The study concludes that CC-96673's unique properties make it a promising therapeutic candidate for B-cell lymphoma patients who are refractory to current treatments, leading to its advancement into clinical trials.

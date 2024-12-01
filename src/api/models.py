@@ -20,7 +20,6 @@ class TableInfo(BaseModel):
     csv_content: str
     footnotes: str
 
-# Add new model for complete paper analysis
 class PaperAnalysis(BaseModel):
     paper_id: str
     metadata: Metadata

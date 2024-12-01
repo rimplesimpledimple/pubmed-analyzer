@@ -6,7 +6,7 @@ from io import StringIO
 
 # Set page config
 st.set_page_config(
-    page_title="Paper Analysis Tool",
+    page_title="Pubmed Paper Analyzer",
     page_icon="📚",
     layout="wide"
 )
@@ -78,7 +78,6 @@ if url:
                 # Handle error responses based on exceptions.py structure
                 try:
                     error_data = response.json()
-                    # UserFacingError messages can be shown directly to users
                     st.error(error_data.get('error', 'An unknown error occurred'))
                 except ValueError:
                     # If response isn't JSON, show generic error

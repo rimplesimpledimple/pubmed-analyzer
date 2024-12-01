@@ -1,8 +1,7 @@
 import json
 from pathlib import Path
-from typing import List, BinaryIO, Generator
+from typing import List, BinaryIO
 from datetime import datetime
-from contextlib import contextmanager
 
 from .storage import Storage, StorageError
 from ..models.paper import PaperMetadata, TableInfo, PaperAnalysis
@@ -30,11 +29,8 @@ class LocalStorage(Storage):
     def store_metadata(self, paper_id: str, metadata: PaperMetadata) -> None:
         """Store metadata for a paper."""
         metadata_path = self.metadata_dir / f"{paper_id}.json"
-        
-        # Convert datetime to ISO format for JSON serialization
-        metadata_dict = metadata.dict()
-        if metadata_dict.get("publication_date"):
-            metadata_dict["publication_date"] = metadata_dict["publication_date"].isoformat()
+                
+        metadata_dict = metadata.dict()        
             
         try:
             with open(metadata_path, 'w', encoding='utf-8') as f:
@@ -43,36 +39,23 @@ class LocalStorage(Storage):
             logger.error(f"Failed to store metadata: {e}")
             raise StorageError(f"Failed to store metadata: {e}")
 
-    @contextmanager
-    def get_paper_writer(self, paper_id: str) -> Generator[BinaryIO, None, None]:
-        """Get a context manager that provides a binary writer for the paper."""
+    def get_paper_writer(self, paper_id: str) -> BinaryIO:
+        """Get a binary writer for the paper."""
         paper_path = self.papers_dir / f"{paper_id}.pdf"
         try:
-            with open(paper_path, 'wb') as f:
-                yield f
+            return open(paper_path, 'wb')
         except IOError as e:
-            logger.error(f"Failed to write paper: {e}")
-            # Clean up the partially written file if it exists
-            if paper_path.exists():
-                paper_path.unlink()
-            raise StorageError(f"Failed to write paper: {e}")
-        except:  # Catch any other exceptions to ensure cleanup
-            # Clean up the partially written file if it exists
-            if paper_path.exists():
-                paper_path.unlink()
-            raise  # Re-raise the original exception
-    
+            logger.error(f"Failed to create paper writer: {e}")
+            raise StorageError(f"Failed to create paper writer: {e}")
 
-    @contextmanager
-    def get_paper_reader(self, paper_id: str) -> Generator[BinaryIO, None, None]:
-        """Get a context manager for reading a paper."""
+    def get_paper_reader(self, paper_id: str) -> BinaryIO:
+        """Get a reader for a paper."""
         paper_path = self.papers_dir / f"{paper_id}.pdf"
         if not paper_path.exists():
             raise StorageError(f"Paper not found: {paper_id}")
-            
+        
         try:
-            with open(paper_path, 'rb') as f:
-                yield f
+            return open(paper_path, 'rb')
         except IOError as e:
             raise StorageError(f"Failed to read paper: {e}")
 

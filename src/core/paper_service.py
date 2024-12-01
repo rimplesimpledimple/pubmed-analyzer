@@ -1,13 +1,13 @@
-from typing import Iterator
 from .downloader.download_manager import DownloadManager
 from .storage.storage import Storage
 from .identifier.identifier import Identifier
 from .models.paper import PaperMetadata, PaperAnalysis
 from .analyzer.base_analyzer import ContentAnalyzer
 from ..utils.logger import logger
+from typing import BinaryIO
 
 class PaperService:
-    """Service for orchestrating academic paper operations."""
+    """Service for orchestrating paper analysis operations."""
     
     def __init__(self, download_manager: DownloadManager, storage: Storage, 
                  identifier: Identifier, analyzer: ContentAnalyzer):
@@ -25,9 +25,9 @@ class PaperService:
         paper_identifier = self.identifier.from_url(url)
         
         # Check cache first, paper and summary exist 
-        if self.storage.is_paper_analyzed(paper_identifier.id):
-            logger.info("Paper already processed: %s", paper_identifier.id)
-            return self.storage.get_analysis(paper_identifier.id)
+        # if self.storage.is_paper_analyzed(paper_identifier.id):
+        #     logger.info("Paper already processed: %s", paper_identifier.id)
+        #     return self.storage.get_analysis(paper_identifier.id)
             
         # Download and store paper
         paper_metadata = self.download_manager.download(url)        
@@ -51,18 +51,19 @@ class PaperService:
             self.storage.store_metadata(paper_identifier.id, paper_metadata)
         return self.storage.get_metadata(paper_identifier.id)
 
-    def download_paper(self, url: str) -> Iterator[bytes]:
+    def download_paper(self, url: str) -> BinaryIO:
         """
-        Stream a paper's content as bytes.                
+        Stream a paper's content as bytes.
         """
-        logger.info("Streaming paper from URL: %s", url)
+        logger.info("Streaming paper from URL, new: %s", url)
         paper_identifier = self.identifier.from_url(url)
         
         # Download if not already in storage
         if not self.storage.check_paper_exists(paper_identifier.id):
             self.download_manager.download(url)
-            
+        
         return self.storage.get_paper_reader(paper_identifier.id)
+            
             
 
 

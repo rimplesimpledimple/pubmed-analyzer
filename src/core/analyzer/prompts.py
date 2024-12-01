@@ -2,18 +2,8 @@
 PDF_SUMMARY_PROMPT = """Based on the content of the research paper, please generate a concise summary (around 250 words) focusing on the paper's objectives, 
 methods, and key findings."""
 
-PDF_MAIN_TABLE_PROMPT = """Given your understanding of the paper, return the table number that appears to be the main results table. Return 'none' if no table appears to be the main results table.
-Output should be in JSON format.
-
-If no table is found, return:
-{
-    "main_table": "none"
-}
-
-If a table is found, return:
-{
-    "main_table": table as JSON 
-}
+PDF_MAIN_TABLE_PROMPT = """Given your understanding of the paper, return the table that appears to be the main results table. 
+Do not make up any information. Only focus on the tables, not charts or other visual elements.
 """
 
 # Text-based paper analysis prompts
@@ -44,6 +34,5 @@ Title: {title}
 Abstract: {abstract}
 Content: {content}
 
-Identify the table that appears to be the main results table. Return your response in JSON format.
-
-Note: Include the complete table content including headers, rows, and any footnotes."""
+Identify and return the table that appears to be the main results table. Focus on the existing tables. Do not create tables that are not present in the paper.
+"""
