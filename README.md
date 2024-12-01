@@ -120,10 +120,19 @@ curl -X POST \
 
 
 # Example Results
+## Paper: [https://pubmed.ncbi.nlm.nih.gov/39040441](https://pubmed.ncbi.nlm.nih.gov/39040441)
 ![https://pubmed.ncbi.nlm.nih.gov/39040441](./sample_results/39040441.png)
+
+## Paper: [https://pubmed.ncbi.nlm.nih.gov/38241836](https://pubmed.ncbi.nlm.nih.gov/38241836)
 ![https://pubmed.ncbi.nlm.nih.gov/38241836](./sample_results/38241836.png)
+
+## Paper: [https://pubmed.ncbi.nlm.nih.gov/38285791](https://pubmed.ncbi.nlm.nih.gov/38285791)
 ![https://pubmed.ncbi.nlm.nih.gov/38285791](./sample_results/38285791.png)
+
+## Paper: [https://pubmed.ncbi.nlm.nih.gov/38349008](https://pubmed.ncbi.nlm.nih.gov/38349008)
 ![https://pubmed.ncbi.nlm.nih.gov/38349008](./sample_results/38349008.png)
+
+## Paper: [https://pubmed.ncbi.nlm.nih.gov/38805560](https://pubmed.ncbi.nlm.nih.gov/38805560)
 ![https://pubmed.ncbi.nlm.nih.gov/38805560](./sample_results/38805560.png)
 
 
