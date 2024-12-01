@@ -17,7 +17,7 @@ A tool to get pubmed papers and summarize them - get summary, tables, etc.
         - Average: 5.6 MB
         - The size is mostly large due to inlcusion of images/figures/charts.
     - Page Count distribution:
-        - [!Page Count](./page_distribution.png)
+        - ![Page Count](./page_distribution.png)
         - Max: 93 (https://pubmed.ncbi.nlm.nih.gov/38798673/)
         - Median:16 
         - Over all papers, avg. number characters per page including spaces: ~4450    
@@ -120,11 +120,11 @@ curl -X POST \
 
 
 # Example Results
-[!https://pubmed.ncbi.nlm.nih.gov/39040441](./sample_results/39040441.png)
-[!https://pubmed.ncbi.nlm.nih.gov/38241836](./sample_results/38241836.png)
-[!https://pubmed.ncbi.nlm.nih.gov/38285791](./sample_results/38285791.png)
-[!https://pubmed.ncbi.nlm.nih.gov/38349008](./sample_results/38349008.png)
-[!https://pubmed.ncbi.nlm.nih.gov/38805560](./sample_results/38805560.png)
+![https://pubmed.ncbi.nlm.nih.gov/39040441](./sample_results/39040441.png)
+![https://pubmed.ncbi.nlm.nih.gov/38241836](./sample_results/38241836.png)
+![https://pubmed.ncbi.nlm.nih.gov/38285791](./sample_results/38285791.png)
+![https://pubmed.ncbi.nlm.nih.gov/38349008](./sample_results/38349008.png)
+![https://pubmed.ncbi.nlm.nih.gov/38805560](./sample_results/38805560.png)
 
 
 
