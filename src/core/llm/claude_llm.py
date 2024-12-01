@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from typing import Optional, List, Dict
 import json
 from .base_llm import BaseLLM
-from ..exceptions import InternalError
+from ...utils.exceptions import InternalError
 
 @dataclass
 class ClaudeLLMConfig:

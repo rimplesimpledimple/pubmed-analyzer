@@ -6,7 +6,7 @@ from contextlib import contextmanager
 
 from .storage import Storage, StorageError
 from ..models.paper import PaperMetadata, TableInfo, PaperAnalysis
-
+from ...utils.logger import logger
 class LocalStorage(Storage):
     """Local filesystem implementation of PaperStorage."""
 
@@ -40,6 +40,7 @@ class LocalStorage(Storage):
             with open(metadata_path, 'w', encoding='utf-8') as f:
                 json.dump(metadata_dict, f, indent=2)
         except IOError as e:
+            logger.error(f"Failed to store metadata: {e}")
             raise StorageError(f"Failed to store metadata: {e}")
 
     @contextmanager
@@ -50,6 +51,7 @@ class LocalStorage(Storage):
             with open(paper_path, 'wb') as f:
                 yield f
         except IOError as e:
+            logger.error(f"Failed to write paper: {e}")
             # Clean up the partially written file if it exists
             if paper_path.exists():
                 paper_path.unlink()
@@ -81,6 +83,7 @@ class LocalStorage(Storage):
             with open(summary_path, 'w', encoding='utf-8') as f:
                 f.write(summary)
         except IOError as e:
+            logger.error(f"Failed to store summary: {e}")
             raise StorageError(f"Failed to store summary: {e}")
 
     def get_summary(self, paper_id: str) -> str:
@@ -93,6 +96,7 @@ class LocalStorage(Storage):
             with open(summary_path, 'r', encoding='utf-8') as f:
                 return f.read()
         except IOError as e:
+            logger.error(f"Failed to read summary: {e}")
             raise StorageError(f"Failed to read summary: {e}")
 
     def store_table(self, paper_id: str, table: TableInfo) -> None:
@@ -106,6 +110,7 @@ class LocalStorage(Storage):
             with open(csv_path, 'w', encoding='utf-8') as f:
                 f.write(table.csv_content)
         except IOError as e:
+            logger.error(f"Failed to store table CSV: {e}")
             raise StorageError(f"Failed to store table CSV: {e}")
 
         # Store metadata
@@ -118,6 +123,7 @@ class LocalStorage(Storage):
             with open(metadata_path, 'w', encoding='utf-8') as f:
                 json.dump(metadata, f, indent=2)
         except IOError as e:
+            logger.error(f"Failed to store table metadata: {e}")
             # Clean up CSV file if metadata storage fails
             if csv_path.exists():
                 csv_path.unlink()
@@ -146,6 +152,7 @@ class LocalStorage(Storage):
                 footnotes=metadata["footnotes"]
             )
         except (IOError, json.JSONDecodeError) as e:
+            logger.error(f"Failed to read table: {e}")
             raise StorageError(f"Failed to read table: {e}")
 
     def _dict_to_metadata(self, data: dict) -> PaperMetadata:
@@ -167,6 +174,7 @@ class LocalStorage(Storage):
                 print(data)
             return self._dict_to_metadata(data)
         except (IOError, json.JSONDecodeError) as e:
+            logger.error(f"Failed to read metadata: {e}")
             raise StorageError(f"Failed to read metadata: {e}")
 
     def list_papers(self) -> List[PaperMetadata]:
@@ -187,3 +195,13 @@ class LocalStorage(Storage):
         summary = self.get_summary(paper_id)
         table = self.get_table(paper_id)
         return PaperAnalysis(paper_id=paper_id, metadata=metadata, summary=summary, main_table=table)
+
+    def is_paper_analyzed(self, paper_id: str) -> bool:
+        """Check if a paper is analyzed."""
+        try:
+            if self.check_paper_exists(paper_id):
+                self.get_summary(paper_id)
+                self.get_table(paper_id)
+                return True
+        except:
+            return False

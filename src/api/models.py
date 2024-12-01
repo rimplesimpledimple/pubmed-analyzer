@@ -2,7 +2,6 @@ from pydantic import BaseModel, HttpUrl
 from typing import Optional, List
 
 
-# Update existing models and add new ones to match domain classes
 class GetAnalysisRequest(BaseModel):
     url: HttpUrl
 

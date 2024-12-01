@@ -7,6 +7,7 @@ from .models import (
     GetAnalysisRequest, 
     PaperAnalysis,
     Metadata,
+    TableInfo
 )
 from ..utils.logger import logger
 
@@ -41,7 +42,7 @@ class PaperHandler:
                     content={"error": "An internal error occurred"}
                 )
         
-        @app.post("/papers", response_model=PaperAnalysis)
+        @app.post("/get-analysis", response_model=PaperAnalysis)
         async def get_analysis(analysis_request: GetAnalysisRequest):
             """Process a paper from a given URL"""
             analysis = self.paper_service.get_analysis(str(analysis_request.url))
@@ -51,11 +52,17 @@ class PaperHandler:
                 abstract=analysis.metadata.abstract,
                 url=analysis.metadata.url
             )
+
+            resp_table = TableInfo(                
+                description=analysis.main_table.description,
+                csv_content=analysis.main_table.csv_content,
+                footnotes=analysis.main_table.footnotes
+            )
             resp_analysis = PaperAnalysis(
                 paper_id=analysis.paper_id,
                 metadata=resp_metadata,
                 summary=analysis.summary,
-                main_table=analysis.main_table
+                main_table=resp_table
             )
             return resp_analysis
 
@@ -75,8 +82,10 @@ class PaperHandler:
         @app.get("/papers/{url:path}/download")
         async def download_paper(url: str):
             """Download paper content"""
-            content_iterator = self.paper_service.download_paper(url)
             return StreamingResponse(
-                content_iterator,
-                media_type="application/pdf"  # Assuming PDF format
+                self.paper_service.download_paper(url),
+                media_type="application/pdf",
+                headers={
+                    "Content-Disposition": f"attachment; filename=paper_{url.split('/')[-1]}.pdf"
+                }
             ) 

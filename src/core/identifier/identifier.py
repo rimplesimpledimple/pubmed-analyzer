@@ -1,7 +1,7 @@
 from urllib.parse import urlparse
 import re
 from ..models.paper import PaperIdentifier, PaperSource
-from ..exceptions import UserFacingError
+from ...utils.exceptions import UserFacingError
 
 class Identifier:
     """Utility class for creating paper identifiers from URLs."""

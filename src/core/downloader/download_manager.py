@@ -3,8 +3,7 @@ from .downloader import PaperDownloader, PaperMetadata
 from ..identifier.identifier import Identifier
 from .downloader import PaperSource
 from ..storage.storage import Storage
-from ..models.paper import PaperIdentifier
-from ..exceptions import InternalError, UserFacingError
+from ...utils.exceptions import InternalError
 
 class DownloadManager:
     """Manages the paper download process and coordinates between different downloaders."""

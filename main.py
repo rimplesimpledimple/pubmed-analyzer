@@ -1,18 +1,20 @@
 from fastapi import FastAPI
-from core.paper_service import PaperService
-from core.downloader.download_manager import DownloadManager
-from core.storage.local_storage import LocalStorage
-from core.identifier.identifier import Identifier
-from core.downloader.downloader import PaperSource
-from core.downloader.pubmed_downloader import PubMedDownloader
-from core.analyzer.pdf_dump_analyzer import PdfDumpAnalyzer
-from core.analyzer.text_dump_analyzer import TextDumpAnalyzer
 from pathlib import Path
-from core.analyzer.extractor.content_extractor import ContentExtractor
-from utils.logger import setup_logging
 from dotenv import load_dotenv
-from api.paper_handler import PaperHandler
 import uvicorn
+import os
+
+from src.core.paper_service import PaperService
+from src.core.downloader.download_manager import DownloadManager
+from src.core.storage.local_storage import LocalStorage
+from src.core.identifier.identifier import Identifier
+from src.core.downloader.downloader import PaperSource
+from src.core.downloader.pubmed_downloader import PubMedDownloader
+from src.core.analyzer.pdf_dump_analyzer import PdfDumpAnalyzer
+from src.core.analyzer.text_dump_analyzer import TextDumpAnalyzer
+from src.core.analyzer.extractor.content_extractor import ContentExtractor
+from src.utils.logger import setup_logging
+from src.api.paper_handler import PaperHandler
 
 storage_root = Path("data")
 
@@ -32,7 +34,7 @@ def create_app() -> FastAPI:
     download_manager = DownloadManager(downloaders=downloaders, storage=storage, identifier=identifier)    
 
     # Choose analyzer strategy
-    txt_dump_analyzer = TextDumpAnalyzer(storage=storage, content_extractor=ContentExtractor(storage))
+    txt_dump_analyzer = TextDumpAnalyzer(storage=storage, content_extractor=ContentExtractor(storage), api_key=os.getenv("CLAUDE_API_KEY"))
     # pdf_dump_analyzer = PdfDumpAnalyzer(storage=storage)
     
     # Create paper service instance

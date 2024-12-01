@@ -5,7 +5,8 @@ from ..storage.storage import Storage
 from .extractor.content_extractor import ContentExtractor
 from ..models.paper import PaperContent, TableInfo, PaperAnalysis
 import os
-from ..utils.logger import logger
+from ...utils.logger import logger
+
 class TextDumpAnalyzer(ContentAnalyzer):
     """Analyzes paper by sending the entire txt content to Claude LLM."""
 

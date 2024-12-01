@@ -5,8 +5,8 @@ from Bio import Entrez
 
 from ..models.paper import PaperMetadata
 from .downloader import PaperDownloader
-from ..exceptions import UserFacingError, InternalError
-from ..utils.logger import logger
+from ...utils.exceptions import UserFacingError, InternalError
+from ...utils.logger import logger
 
 
 class PubMedDownloader(PaperDownloader):

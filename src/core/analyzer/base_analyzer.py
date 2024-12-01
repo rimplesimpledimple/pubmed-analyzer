@@ -1,8 +1,6 @@
 from abc import ABC, abstractmethod
 from ..models.paper import PaperAnalysis
 
-    
-
 class ContentAnalyzer(ABC):
     """Abstract base class for different paper content analyzers."""    
     

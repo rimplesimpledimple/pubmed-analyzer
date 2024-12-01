@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from typing import BinaryIO, ContextManager
 from ..models.paper import PaperMetadata, PaperAnalysis
 from typing import List
-from ..exceptions import InternalError
+from ...utils.exceptions import InternalError
 
 class StorageError(InternalError):
     """Exception raised for storage errors."""
@@ -65,4 +65,9 @@ class Storage(ABC):
     @abstractmethod
     def get_analysis(self, paper_id: str) -> PaperAnalysis:
         """Retrieve an analysis for a paper."""
+        pass
+
+    @abstractmethod
+    def is_paper_analyzed(self, paper_id: str) -> bool:
+        """Check if a paper is analyzed."""
         pass

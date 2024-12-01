@@ -1,7 +1,7 @@
 from typing import Iterator
 from .downloader.download_manager import DownloadManager
 from .storage.storage import Storage
-from ..identifier.identifier import Identifier
+from .identifier.identifier import Identifier
 from .models.paper import PaperMetadata, PaperAnalysis
 from .analyzer.base_analyzer import ContentAnalyzer
 from ..utils.logger import logger
@@ -24,8 +24,8 @@ class PaperService:
         
         paper_identifier = self.identifier.from_url(url)
         
-        # Check cache first
-        if self.storage.check_paper_exists(paper_identifier.id):
+        # Check cache first, paper and summary exist 
+        if self.storage.is_paper_analyzed(paper_identifier.id):
             logger.info("Paper already processed: %s", paper_identifier.id)
             return self.storage.get_analysis(paper_identifier.id)
             
