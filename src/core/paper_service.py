@@ -25,9 +25,9 @@ class PaperService:
         paper_identifier = self.identifier.from_url(url)
         
         # Check cache first, paper and summary exist 
-        # if self.storage.is_paper_analyzed(paper_identifier.id):
-        #     logger.info("Paper already processed: %s", paper_identifier.id)
-        #     return self.storage.get_analysis(paper_identifier.id)
+        if self.storage.is_paper_analyzed(paper_identifier.id):
+            logger.info("Paper already processed: %s", paper_identifier.id)
+            return self.storage.get_analysis(paper_identifier.id)
             
         # Download and store paper
         paper_metadata = self.download_manager.download(url)        

@@ -4,7 +4,7 @@ A tool to get pubmed papers and summarize them - get summary, tables, etc.
 
 # Limitations
 - Only supports papers with pmcid(pubmed central id). 199/294 papers provided. 
-- Rate limits for LLMs not handled. Issue with claude TPM-40k for large papers.
+- Although the context window size is not an issue, rate limits for LLMs are not handled currently. Ran into an issue with claude for large papers - 40k Tokens per minute allowed for basic tier.
 
 
 # Approach
@@ -56,25 +56,41 @@ A tool to get pubmed papers and summarize them - get summary, tables, etc.
     -  Cons:
         - parsing pdf would lose the layout, could be less accurate for tables.
 
-- Hybrid approach
+- Hybrid approach (to be implemented)
     - Send the entire txt content of the pdf to the LLM with Page Numbers.
     - Ask the LLM about the specific page number with the main table.
-    - Pass the image of the table to the LLM.
-
+    - Pass the image of the page with the table to the LLM.
 
 # Design
 ![Design](./design.png)
 
-## Downloader
-- works only for papers with pmcid(pubmed central id). 
+
+## Paper Service Component
+- For orchestrating the complete flow of getting the paper, analyzing it and storing it.
+
+## Downloader Component
+- For downloading the pdf of the paper. Only supports papers with pmcid(pubmed central id). 
 - rate limited to 3 requests per second by pubmed api.
 
-## Analyzer
-- PdfDumpAnalyzer
-    - send the entire pdf to the LLM.
-- TextDumpAnalyzer
-    - parse the pdf using a library(pymupdf) and send the entire txt content to the LLM.
-- HybridAnalyzer[to be added] 
+## Analyzer Component
+- Responsible for doing the analysis of the paper - getting summary, tables etc.
+- 2 types of analyzers:
+    - PdfDumpAnalyzer
+        - send the entire pdf to the LLM.
+    - TextDumpAnalyzer  
+        - parse the pdf using a library(pymupdf) and send the entire txt content to the LLM.
+
+## Storage Component
+- For storing the pdf, txt content, etc.
+- Local storage for now.
+
+## Identifier Component
+- For generating unique ids for the papers. Currently using the pubmed id.
+
+## LLM Component
+- For interacting with the LLMs.
+- Currently supports claude and openai.
+
 
 # Logging and Error Handling
 - Global logger, logging at the source where the error occurs.
@@ -82,13 +98,14 @@ A tool to get pubmed papers and summarize them - get summary, tables, etc.
 
 # Setup instructions
 - clone the repo
-- python version <3.11 (biopython dependency supports only upto 3.11)(using mac? `brew install python@3.11`)
+- python version <3.12 (biopython dependency supports only upto 3.11)(using mac? `brew install python@3.11`)
 - create a virtual environment and install the dependencies using `pip install -r requirements.txt`
-- setup the environment variables, .env in root directory. Add "CLAUDE_API_KEY"
+- setup the environment variables, .env in root directory. Add "CLAUDE_API_KEY"/"OPENAI_API_KEY". The app would check if openai api key is present, if not then it would use claude.
 
 # Usage
 Update the .env file with the API key for claude/openai. 
 Update the model getting used in main.py file.
+The results are saved in the `data` directory.
 
 ## Streamlit UI
 - run frontend `python streamlit run app.py`
@@ -120,6 +137,8 @@ curl -X POST \
 
 
 # Example Results
+Results are saved in the `data` directory. Below are screenshots of the results as shown in the streamlit UI.
+
 ## Paper: [https://pubmed.ncbi.nlm.nih.gov/39040441](https://pubmed.ncbi.nlm.nih.gov/39040441)
 ![https://pubmed.ncbi.nlm.nih.gov/39040441](./sample_results/39040441.png)
 

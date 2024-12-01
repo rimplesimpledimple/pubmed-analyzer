@@ -1,1 +1,3 @@
-No results table to extract
+Treatment,Micronuclei Induction (%),Aneuploidy (%),M1-like Macrophage Markers (MHCII/CD86),M2-like Macrophage Markers (CD163/CD206),Tumor Growth (GFP+ Area),Immune Cell Infiltrate (CD45+),Myeloid Cell Infiltrate (CD11b+),Macrophage Infiltrate (F4/80+),M1-like Macrophage Infiltrate (CD86hi/CD206lo)
+DMSO,1,10,Low,High,High,Low,Low,Low,Low
+MPS1i,>10,34,High,Low,Low,High,High,High,High

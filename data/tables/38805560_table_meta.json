@@ -1,4 +1,4 @@
 {
-  "description": "This research paper does not contain a traditional results table. The paper presents its results primarily through figures and their associated descriptions. The only table-like element in the paper is Appendix 1\u2014key resources table, which is a standard resources table listing reagents, antibodies, cell lines, and other materials used in the research, rather than a results table.",
-  "footnotes": "No results table footnotes available"
+  "description": "Main results table showcasing the effects of MPS1i treatment on B16F10 cells and macrophage activity.",
+  "footnotes": "Data represents the effects of MPS1i treatment compared to DMSO control on B16F10 cells and macrophage activity. Micronuclei induction and aneuploidy percentages indicate chromosomal instability. M1-like and M2-like macrophage markers reflect polarization states. Tumor growth and immune cell infiltrate metrics are based on in vivo experiments."
 }

@@ -34,8 +34,10 @@ def create_app() -> FastAPI:
     identifier = Identifier()
     download_manager = DownloadManager(downloaders=downloaders, storage=storage, identifier=identifier)    
 
-    # llm = OpenAILLM(config=OpenAILLMConfig(api_key=os.getenv("OPENAI_API_KEY")))
-    llm = ClaudeLLM(config=ClaudeLLMConfig(api_key=os.getenv("CLAUDE_API_KEY")))
+    if os.getenv("OPENAI_API_KEY"):
+        llm = OpenAILLM(config=OpenAILLMConfig(api_key=os.getenv("OPENAI_API_KEY")))
+    else:
+        llm = ClaudeLLM(config=ClaudeLLMConfig(api_key=os.getenv("CLAUDE_API_KEY")))
 
     # Choose analyzer strategy
     analyzer = TextDumpAnalyzer(storage=storage, content_extractor=ContentExtractor(storage), llm=llm)
