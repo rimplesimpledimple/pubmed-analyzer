@@ -3,7 +3,8 @@
 A tool to get pubmed papers and summarize them - get summary, tables, etc.
 
 # Limitations
-- Only supports papers with pmcid(pubmed central id). 199/294 papers provided. 
+- Only supports papers with pmcid(pubmed central id). 199/294 papers provided.
+    - [Not implemented yet] Update: Here is a better smart approach. Each paper has a unique doi that points to the paper page. Fetch the page HTML, filter and get the Links with text from the page. Asl LLM for potential download Links. Download, verify its a pdf. No more limitation to Pubmed central. 
 - Although the context window size is not an issue, rate limits for LLMs are not handled currently. Ran into an issue with claude for large papers - 40k Tokens per minute allowed for basic tier.
 
 
